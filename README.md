@@ -15,10 +15,10 @@ The application should start at http://localhost:3000.
 
 Project Functionalities
 
-Create, update, delete a User
-Login User w authentication
-Store images at the server
-Forget and reset password
-Create, Edit, Delete, and Review a Product
-Filter Search User or Product
+Create, update, delete a User,
+Login User w authentication,
+Store images at the server,
+Forget and reset password,
+Create, Edit, Delete, and Review a Product,
+Filter Search User or Product,
 setup Pagination
