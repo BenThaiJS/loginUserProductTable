@@ -1,0 +1,149 @@
+// Create a user
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name": "Ben",
+    "email": "benspankem@gmail.com",
+    "password": "Password123",
+    "confirmPassword": "Password123",
+    "role": "admin"
+}
+
+###
+// Get Users
+GET http://localhost:5000/users/?search_query=&page=0&limit=10
+
+###
+// Get Single User
+GET http://localhost:5000/users/4ac40faa-3ec5-483b-92c8-19912970c2eb
+
+###
+// Update a user
+PATCH http://localhost:5000/users/4ac40faa-3ec5-483b-92c8-19912970c2eb
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "joe@gmail.com",
+    "password": "",
+    "confirmPassword": "",
+    "role": "admin"
+}
+
+###
+// Delete a user
+DELETE http://localhost:5000/users/140212df-31d1-4df1-bf13-55026f0c1660
+
+###
+// Login admin
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "benspankem@gmail.com",
+    "password": "Password123"
+}
+
+###
+// Login user
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "johndoe@gmail.com",
+    "password": "Password123"
+}
+
+
+###
+// User account
+GET http://localhost:5000/me
+
+###
+// Log out user
+DELETE  http://localhost:5000/logout
+
+###
+// Get Products By Query
+GET http://localhost:5000/products/?search_query=&page=0&limit=10
+
+###
+// Get Single Product
+GET http://localhost:5000/products/463529f3-e4ed-44b6-ae84-7a12ade9193c
+###
+// POST Data Product
+POST http://localhost:5000/products
+Content-Type: application/json
+
+{
+    "name": "Bananas",
+    "price": "3"
+}
+
+###
+// Update Data Product
+PATCH http://localhost:5000/products/655f6974-cc8b-4bd1-bdd1-c4d354eab9ff
+Content-Type: application/json
+
+{
+    "name": "Product Updated",
+    "price": "974"
+}
+
+###
+// Delete Data Product
+DELETE  http://localhost:5000/products/c1ddaf99-a257-4fd5-afa5-8e9dd6343c80
+###
+
+###
+// ADD REVIEW
+POST http://localhost:5000/reviews
+Content-Type: application/json
+
+{
+    "rating": 5,
+    "description": "Very Fresh",
+    "productId": 1
+}
+
+###
+// GET All REVIEWS
+GET http://localhost:5000/reviews
+
+###
+// Delete a review
+DELETE http://localhost:5000/reviews/4163e16f-7fd8-4cf2-8d14-37120d621e07
+
+###
+// Update a review
+PATCH http://localhost:5000/reviews/74b7a9bc-9ce8-4373-9742-f48cd7b089d3
+Content-Type: application/json
+
+{
+    "name": "Product updated",
+    "rating": 5,
+    "description": "Very fresh and clean clean"
+}
+
+###
+// GET All REVIEWS
+GET http://localhost:5000/reviews/733462a9-8515-48a1-82e4-57238b79adab
+
+###
+// GET REVIEW BY PRODUCT ID
+GET http://localhost:5000/reviews/733462a9-8515-48a1-82e4-57238b79adab
+
+# ###
+# // Forgot Password Page
+# GET http://localhost:5000/forgotPassword
+
+###
+// Forgot Password
+POST http://localhost:5000/forgotPassword
+Content-Type: application/json
+
+{
+    "email": "benspankem@gmail.com"
+}
+
