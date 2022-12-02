@@ -48,7 +48,7 @@ const CommentCard = ({ details, userId }) => {
         {user.uuid === userId ? (
           <button
             onClick={(e) => deleteComment()}
-            className='button is-small is-danger'
+            className='button is-small is-danger ml-6'
           >
             Delete
           </button>

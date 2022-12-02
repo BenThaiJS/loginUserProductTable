@@ -41,10 +41,6 @@ const Userlist = () => {
     setPage(0);
   };
 
-  const showUser = (e) => {
-    console.log("hello")
-  }
-
   return (
     <div>
       <h1 className='title'>Users</h1>
@@ -83,7 +79,7 @@ const Userlist = () => {
         </thead>
         <tbody>
           {users.map((user, index) => (
-            <tr key={user.uuid} onClick={showUser}> 
+            <tr key={user.uuid}> 
               <td>{index + 1}</td>
               <td>
                 {user.image ? (

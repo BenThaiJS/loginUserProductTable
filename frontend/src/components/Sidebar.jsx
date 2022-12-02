@@ -21,13 +21,13 @@ const Sidebar = () => {
         <ul className='menu-list'>
           <li>
             <NavLink to={"/dashboard"}>
-              <IoHome />
+              <IoHome style={{ marginRight: "1rem" }} />
               Dashboard
             </NavLink>
           </li>
           <li>
             <NavLink to={"/products"}>
-              <IoPricetag />
+              <IoPricetag style={{ marginRight: "1rem" }} />
               Products
             </NavLink>
           </li>
@@ -38,7 +38,7 @@ const Sidebar = () => {
             <ul className='menu-list'>
               <li>
                 <NavLink to={"/users"}>
-                  <IoPerson />
+                  <IoPerson style={{ marginRight: "1rem" }} />
                   Users
                 </NavLink>
               </li>
@@ -50,7 +50,7 @@ const Sidebar = () => {
         <ul className='menu-list'>
           <li>
             <button onClick={logout} className='button is-white'>
-              <IoLogOut />
+              <IoLogOut style={{ marginRight: "1rem" }} />
               Logout
             </button>
           </li>

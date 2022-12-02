@@ -33,6 +33,10 @@ const Products = db.define(
         notEmpty: true,
       },
     },
+    countInStock: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     description: {
       type: DataTypes.TEXT,
     },

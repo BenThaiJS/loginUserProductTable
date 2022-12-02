@@ -57,7 +57,12 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                <Link to={"/ForgotPassword"}>Forgot/Reset Password</Link>
+                <div>
+                  <Link to={"/ForgotPassword"}>Forgot/Reset Password</Link>
+                </div>
+                <div>
+                  <Link to={"/SignUp"}>Not Register?</Link>
+                </div>
                 <div className='field mt-5'>
                   <button
                     type='submit'

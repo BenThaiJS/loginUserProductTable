@@ -10,6 +10,7 @@ import EditProduct from "./pages/EditProduct";
 import ReviewProduct from "./pages/ReviewProduct";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/forgotPassword' element={<ForgotPassword />} />
+          <Route path="/signup" element={<SignUp/>}/>
           <Route path='/resetPassword/:id/:token' element={<ResetPassword />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/users' element={<Users />} />
