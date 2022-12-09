@@ -1,18 +1,29 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { LogOut, reset } from "../features/authSlice";
-
+import { useDispatch, useSelector } from "react-redux";
+import { LogOut, reset } from "../redux/reducers/authSlice";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const { user } = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
 
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
     navigate("/");
+  };
+
+  const getTotal = () => {
+    let totalQuantity = 0;
+    let totalPrice = 0;
+    cart.cart.forEach((item) => {
+      totalQuantity += item.quantity;
+      totalPrice += item.price * item.quantity;
+    });
+    return { totalPrice, totalQuantity };
   };
 
   return (
@@ -49,8 +60,13 @@ const Navbar = () => {
         <div id='navbarBasicExample' className='navbar-menu'>
           <div className='navbar-end'>
             <div className='navbar-item'>
+              <p>Total: {getTotal().totalPrice}</p>
               <div className='buttons'>
-                <button onClick={logout} className='button is-light'>
+                <button className='button is-info is-light'>
+                  <FaShoppingCart />
+                  <div className='ml-2'>{getTotal().totalQuantity}</div>
+                </button>
+                <button onClick={logout} className='button is-warning'>
                   Log Out
                 </button>
               </div>

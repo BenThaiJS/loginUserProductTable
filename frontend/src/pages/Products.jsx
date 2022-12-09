@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import ProductList from "../components/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getMe } from "../features/authSlice";
+import { getMe } from "../redux/reducers/authSlice";
 
 const Products = () => {
   const dispatch = useDispatch();

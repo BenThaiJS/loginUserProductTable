@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import Userlist from "../components/Userlist";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getMe } from "../features/authSlice";
+import { getMe } from "../redux/reducers/authSlice";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -18,11 +18,11 @@ const Users = () => {
     if (isError) {
       navigate("/");
     }
-    if(user && user.role !== "admin") {
-      navigate("/dashboard")
+    if (user && user.role !== "admin") {
+      navigate("/dashboard");
     }
   }, [isError, user, navigate]);
-  
+
   return (
     <div>
       <Layout>

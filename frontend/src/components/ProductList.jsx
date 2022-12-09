@@ -2,10 +2,15 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { formatCurrency } from "../utils/formatCurrency";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addToCart,
+  removeItem,
+  getProducts,
+  deleteProduct,
+} from "../redux/reducers/cartSlice.js";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -14,26 +19,19 @@ const ProductList = () => {
   const [pages, setPages] = useState(0);
   const [rows, setRows] = useState(0);
   const [keyword, setKeyword] = useState("");
+
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getProducts();
+    dispatch(getProducts({ keyword, page, limit })).then((action) => {
+      setProducts(action.payload.result);
+      setLimit(action.payload.limit);
+      setPage(action.payload.page);
+      setPages(action.payload.totalPage);
+      setRows(action.payload.totalRows);
+    });
   }, [page, keyword]);
-
-  const getProducts = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/products/?search_query=${keyword}&page=${page}&limit=${limit}`
-    );
-    setProducts(response.data.result);
-    setPage(response.data.page);
-    setPages(response.data.totalPage);
-    setRows(response.data.totalRows);
-  };
-
-  const deleteProduct = async (productId) => {
-    await axios.delete(`http://localhost:5000/products/${productId}`);
-    getProducts();
-  };
 
   const changePage = ({ selected }) => {
     setPage(selected);
@@ -44,8 +42,11 @@ const ProductList = () => {
     setPage(0);
   };
 
-  const addToCart = () => {};
-  const minusFromCart = () => {};
+  const handleDelete = async (e, product) => {
+    e.preventDefault();
+    dispatch(deleteProduct(product.uuid));
+    window.location.reload();
+  };
 
   return (
     <div>
@@ -79,6 +80,7 @@ const ProductList = () => {
             <th>Image</th>
             <th>Product Name</th>
             <th>Price</th>
+            <th>Quantity</th>
             <th>Created By</th>
             <th>Actions</th>
             <th>Reviews</th>
@@ -86,7 +88,7 @@ const ProductList = () => {
         </thead>
         <tbody>
           {products.map((product, index) => (
-            <tr key={product.uuid}>
+            <tr key={product.id} style={{ justifyContent: "center" }}>
               <td>{index + 1}</td>
               <td>
                 {product.image ? (
@@ -102,22 +104,66 @@ const ProductList = () => {
               </td>
               <td>{product.name}</td>
               <td>{formatCurrency(product.price)}</td>
+              <td>{product.quantity}</td>
               <td>{product.user.name}</td>
-              <td>
-                <Link
-                  to={`/products/edit/${product.uuid}`}
-                  className='button is-small is-info'
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={(e) => deleteProduct(product.uuid)}
-                  className='button is-small is-danger'
-                >
-                  Delete
-                </button>
-              </td>
-
+              {user.id === product.userId && user.role !== "admin" ? (
+                <td>
+                  <Link
+                    to={`/products/edit/${product.uuid}`}
+                    className='button is-small is-info'
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={(e) => handleDelete(e, product)}
+                    className='button is-small is-danger'
+                  >
+                    Delete
+                  </button>
+                </td>
+              ) : user.id !== product.userId && user.role !== "admin" ? (
+                <td>
+                  <button
+                    onClick={(e) => dispatch(addToCart(product))}
+                    className='button is-small is-success'
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    onClick={() => dispatch(removeItem(product.id))}
+                    className='button is-small is-warning'
+                  >
+                    Remove From Cart
+                  </button>
+                </td>
+              ) : (
+                <td>
+                  <Link
+                    to={`/products/edit/${product.uuid}`}
+                    className='button is-small is-info'
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={(e) => handleDelete(e, product)}
+                    className='button is-small is-danger'
+                  >
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => dispatch(addToCart(product))}
+                    className='button is-small is-success'
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    onClick={() => dispatch(removeItem(product.id))}
+                    className='button is-small is-warning'
+                  >
+                    Remove From Cart
+                  </button>
+                </td>
+              )}
               <td>
                 <Link to={`/products/reviews/${product.uuid}`}>
                   Add Comments

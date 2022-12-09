@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import FormAddUser from "../components/FormAddUser";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getMe } from "../features/authSlice";
+import { getMe } from "../redux/reducers/authSlice";
 
 const AddUser = () => {
   const dispatch = useDispatch();
@@ -18,8 +18,8 @@ const AddUser = () => {
     if (isError) {
       navigate("/");
     }
-    if(user && user.role !== "admin") {
-      navigate("/dashboard")
+    if (user && user.role !== "admin") {
+      navigate("/dashboard");
     }
   }, [isError, user, navigate]);
 

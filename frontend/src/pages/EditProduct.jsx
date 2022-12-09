@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import FormEditProduct from "../components/FormEditProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getMe } from "../features/authSlice";
+import { getMe } from "../redux/reducers/authSlice";
 
 const EditProduct = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const EditProduct = () => {
       navigate("/");
     }
   }, [isError, navigate]);
-  
+
   return (
     <Layout>
       <FormEditProduct />

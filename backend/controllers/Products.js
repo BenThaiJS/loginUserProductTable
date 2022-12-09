@@ -34,11 +34,12 @@ export const getProductByQuery = async (req, res) => {
         "id",
         "description",
         "userId",
+        "quantity",
       ],
       include: [
         {
           model: User,
-          attributes: ["name", "email"],
+          attributes: ["name", "email", "id"],
         },
       ],
       where: {
@@ -88,6 +89,7 @@ export const getProductById = async (req, res) => {
         "image",
         "description",
         "userId",
+        "quantity",
       ],
       where: {
         id: product.id,
@@ -95,7 +97,7 @@ export const getProductById = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["name", "email"],
+          attributes: ["name", "email", "id"],
         },
       ],
     });
@@ -107,7 +109,7 @@ export const getProductById = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
-  const { name, price, description } = req.body;
+  const { name, price, description, quantity } = req.body;
   try {
     await Product.create({
       name: name,
@@ -115,6 +117,7 @@ export const createProduct = async (req, res) => {
       description: description,
       image: req.file?.path,
       userId: req.userId,
+      quantity: quantity,
     });
     res.status(201).json({ msg: "Product Created Successfully" });
   } catch (err) {
@@ -130,11 +133,11 @@ export const updateProduct = async (req, res) => {
       },
     });
     if (!product) return res.status(404).json({ msg: "Product not found" });
-    const { name, price, description } = req.body;
+    const { name, price, description, quantity } = req.body;
     const image = req.file?.path;
     if (req.role === "admin") {
       await Product.update(
-        { name, price, image, description },
+        { name, price, image, description, quantity },
         {
           where: {
             id: product.id,

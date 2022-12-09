@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { LogOut, reset } from "../features/authSlice";
+import { LogOut, reset } from "../redux/reducers/authSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -48,6 +48,12 @@ const Sidebar = () => {
 
         <p className='menu-label'>Settings</p>
         <ul className='menu-list'>
+          <li>
+            <NavLink to={"/account"}>
+              <IoPerson style={{ marginRight: "1rem" }} />
+              Account
+            </NavLink>
+          </li>
           <li>
             <button onClick={logout} className='button is-white'>
               <IoLogOut style={{ marginRight: "1rem" }} />

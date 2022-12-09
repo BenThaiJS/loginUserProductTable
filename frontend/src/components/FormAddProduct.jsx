@@ -8,6 +8,7 @@ const FormAddProduct = () => {
   const [msg, setMsg] = useState("");
   const [image, setImage] = useState({});
   const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
   const navigate = useNavigate();
 
   const saveProduct = async (e) => {
@@ -17,6 +18,7 @@ const FormAddProduct = () => {
     formData.append("name", name);
     formData.append("price", price);
     formData.append("description", description);
+    formData.append("quantity", quantity);
 
     try {
       await axios.post("http://localhost:5000/products", formData);
@@ -74,6 +76,19 @@ const FormAddProduct = () => {
                     placeholder='Description'
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className='field'>
+                <label className='label'>Quantity</label>
+                <div className='control'>
+                  <input
+                    type='number'
+                    className='input'
+                    placeholder='0'
+                    min="0"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
                   />
                 </div>
               </div>

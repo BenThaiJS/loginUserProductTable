@@ -65,6 +65,10 @@ GET http://localhost:5000/me
 DELETE  http://localhost:5000/logout
 
 ###
+// Get All Products
+GET http://loca; 
+
+###
 // Get Products By Query
 GET http://localhost:5000/products/?search_query=&page=0&limit=10
 

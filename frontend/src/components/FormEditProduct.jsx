@@ -8,6 +8,7 @@ const FormEditProduct = () => {
   const [description, setDescription] = useState("");
   const [msg, setMsg] = useState("");
   const [image, setImage] = useState({});
+  const [quantity, setQuantity] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -36,6 +37,7 @@ const FormEditProduct = () => {
     formData.append("name", name);
     formData.append("price", price);
     formData.append("description", description);
+    formData.append("quantity", quantity)
 
     try {
       await axios.patch(`http://localhost:5000/products/${id}`, formData);
@@ -81,6 +83,19 @@ const FormEditProduct = () => {
                     placeholder='Price'
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className='field'>
+                <label className='label'>Quantity</label>
+                <div className='control'>
+                  <input
+                    type='number'
+                    className='input'
+                    placeholder='0'
+                    min="0"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
                   />
                 </div>
               </div>

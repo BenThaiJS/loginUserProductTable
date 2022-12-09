@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import FormAddProduct from "../components/FormAddProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getMe } from "../features/authSlice";
+import { getMe } from "../redux/reducers/authSlice";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const AddProduct = () => {
       navigate("/");
     }
   }, [isError, navigate]);
-  
+
   return (
     <Layout>
       <FormAddProduct />

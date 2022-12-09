@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMe } from "../features/authSlice";
+import { getMe } from "../redux/reducers/authSlice";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import ProductCard from "../components/ProductCard";
