@@ -11,7 +11,7 @@ import ReviewProduct from "./pages/ReviewProduct";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import Cart from "./pages/Cart";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
@@ -22,8 +22,8 @@ function App() {
       <BrowserRouter>
         <Provider store={store}>
           <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path='/login' element={<Login />} />
+            {/* <Route path="/" element={<Home/>}/> */}
+            <Route path='/' element={<Login />} />
             <Route path='/forgotPassword' element={<ForgotPassword />} />
             <Route path='/signup' element={<SignUp />} />
             <Route
