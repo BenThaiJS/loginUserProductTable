@@ -17,9 +17,9 @@ const FormEditUser = () => {
     const getUserById = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/users/${id}`);
-        setName(response.data.name);
-        setEmail(response.data.email);
-        setRole(response.data.role);
+        setName(response.data.name ? response.data.name : "");
+        setEmail(response.data.email ? response.data.email : "");
+        setRole(response.data.role ? response.data.role : "");
       } catch (err) {
         if (err.response) {
           setMsg(err.response.data.msg);
@@ -124,6 +124,7 @@ const FormEditUser = () => {
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                     >
+                      <option></option>
                       <option value='admin'>Admin</option>
                       <option value='user'>User</option>
                     </select>

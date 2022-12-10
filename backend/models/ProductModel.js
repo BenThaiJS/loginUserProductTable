@@ -20,11 +20,6 @@ const Products = db.define(
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        len: [2, 100],
-      },
     },
     price: {
       type: DataTypes.STRING,

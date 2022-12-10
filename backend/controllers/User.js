@@ -93,7 +93,7 @@ export const updateUser = async (req, res) => {
     },
   });
   if (!user) return res.status(404).json({ msg: "User not found" });
-  const { name, email, password, confirmPassword, role } = req.body;
+  const { name, email, password, confirmPassword, role, address, state, city, country, zip, phone } = req.body;
   let hashPassword;
   if (password === "" || password === null) {
     hashPassword = user.password;
@@ -112,6 +112,12 @@ export const updateUser = async (req, res) => {
         password: hashPassword,
         image: req.file?.path,
         role: role,
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        zip: zip, 
+        phone: phone
       },
       {
         where: {

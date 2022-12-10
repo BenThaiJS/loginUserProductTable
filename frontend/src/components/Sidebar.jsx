@@ -49,7 +49,7 @@ const Sidebar = () => {
         <p className='menu-label'>Settings</p>
         <ul className='menu-list'>
           <li>
-            <NavLink to={"/account"}>
+            <NavLink to={`/account/user/${user?.uuid}`}>
               <IoPerson style={{ marginRight: "1rem" }} />
               Account
             </NavLink>
