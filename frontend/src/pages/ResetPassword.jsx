@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [msg, setMsg] = useState("");
   const { id, token } = useParams();
+  const navigate = useNavigate();
 
-  console.log(`http://localhost:5000/resetPassword/${id}/${token}`)
+  console.log(`http://localhost:5000/resetPassword/${id}/${token}`);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:5000/resetPassword/${id}/${token}`, {
-        newPassword: newPassword,
-      });
+      const response = await axios.post(
+        `http://localhost:5000/resetPassword/${id}/${token}`,
+        {
+          newPassword: newPassword,
+        }
+      );
       setMsg(response.data.msg);
     } catch (err) {
       if (err.response) {
@@ -23,10 +28,9 @@ const ResetPassword = () => {
     }
   };
 
-  if(msg === "Password updated") {
-    
-  }
-
+  useEffect(() => {
+    if (msg === "Password Updated") setTimeout(() => navigate("/"), 2000);
+  }, [navigate, msg]);
   return (
     <section className='hero has-background-grey-light is-fullheight is-fullwidth'>
       <div className='hero-body'>

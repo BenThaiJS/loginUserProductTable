@@ -33,7 +33,7 @@ export const forgotPassword = async (req, res, next) => {
       subject: "Password Reset",
       text: link,
     };
-
+    console.log(111111, user.email)
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
