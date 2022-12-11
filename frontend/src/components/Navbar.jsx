@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../redux/reducers/authSlice";
 import { FaShoppingCart } from "react-icons/fa";
+import { formatCurrency } from "../utils/functions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,8 @@ const Navbar = () => {
       totalQuantity += item.quantity;
       totalPrice += item.price * item.quantity;
     });
-    return { totalPrice, totalQuantity };
+    const newTotalPrice = formatCurrency(totalPrice)
+    return { newTotalPrice, totalQuantity };
   };
 
   return (
@@ -60,7 +62,7 @@ const Navbar = () => {
         <div id='navbarBasicExample' className='navbar-menu'>
           <div className='navbar-end'>
             <div className='navbar-item'>
-              <p>Total: {getTotal().totalPrice}</p>
+              <p>Total: {getTotal().newTotalPrice}</p>
               <div className='buttons'>
                 <button className='button is-info is-light'>
                   <FaShoppingCart />

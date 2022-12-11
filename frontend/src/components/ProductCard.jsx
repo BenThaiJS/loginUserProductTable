@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { formatCurrency } from "../utils/formatCurrency";
+import { formatCurrency } from "../utils/functions";
 import CommentCard from "./CommentCard";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { useSelector } from "react-redux";

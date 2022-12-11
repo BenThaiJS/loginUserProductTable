@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { capitalizeFirstLetter } from "../utils/functions";
 
 const Userlist = () => {
   const [users, setUsers] = useState([]);
@@ -93,7 +94,7 @@ const Userlist = () => {
                   ""
                 )}
               </td>
-              <td>{user.name}</td>
+              <td>{capitalizeFirstLetter(user.name)}</td>
               <td>{user.email}</td>
               <td>{user.role}</td>
               <td>

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { formatCurrency } from "../utils/formatCurrency";
+import { formatCurrency, capitalizeFirstLetter } from "../utils/functions";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addToCart,
@@ -102,10 +102,10 @@ const ProductList = () => {
                   ""
                 )}
               </td>
-              <td>{product.name}</td>
+              <td>{capitalizeFirstLetter(product.name)}</td>
               <td>{formatCurrency(product.price)}</td>
               <td>{product.quantity}</td>
-              <td>{product.user.name}</td>
+              <td>{capitalizeFirstLetter(product.user.name)}</td>
               {user.id === product.userId && user.role !== "admin" ? (
                 <td>
                   <Link

@@ -1,31 +1,120 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {
+  isRequired,
+  isBetween,
+  isEmailValid,
+  isPasswordSecure,
+} from "../utils/functions";
 
 const SignUp = () => {
   const [password, setPassword] = useState("");
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordErrorMsg, setConfirmPasswordErrorMsg] = useState("");
   const [name, setName] = useState("");
+  const [nameErrorMsg, setNameErrorMsg] = useState("");
   const [email, setEmail] = useState("");
+  const [emailErrorMsg, setEmailErrorMsg] = useState("");
   const [role, setRole] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
+  const checkUsername = (name) => {
+    console.log(name)
+    let valid = false;
+    const min = 3;
+    const max = 25;
+    name?.trim()
+    if (!isRequired(name)) {
+      setNameErrorMsg("Username cannot be blank.");
+    } else if (!isBetween(name?.length, min, max)) {
+      setNameErrorMsg(`Username must be between ${min} and ${max} characters.`);
+    } else {
+      setNameErrorMsg("");
+      valid = true;
+    }
+    return valid;
+  };
+
+  const checkEmail = (email) => {
+    let valid = false;
+    email?.trim();
+    if (!isRequired(email)) {
+      setEmailErrorMsg("Email cannot be blank.");
+    } else if (!isEmailValid(email)) {
+      setEmailErrorMsg("Email is not valid.");
+    } else {
+      setEmailErrorMsg("");
+      valid = true;
+    }
+    return valid;
+  };
+
+  const checkPassword = (password) => {
+    let valid = false;
+    password?.trim();
+    if (!isRequired(password)) {
+      setPasswordErrorMsg("Password cannot be blank.");
+    } else if (!isPasswordSecure(password)) {
+      setPasswordErrorMsg(
+        "Password must has at least 8 characters that include at least 1 lowercase character, 1 uppercase characters, 1 number, and 1 special character in (!@#$%^&*)"
+      );
+    } else {
+      setPasswordErrorMsg("");
+      valid = true;
+    }
+    return valid;
+  };
+
+  const checkConfirmPassword = (password, confirmPassword) => {
+    let valid = false;
+    // check confirm password
+    confirmPassword?.trim();
+    password?.trim();
+
+    if (!isRequired(confirmPassword)) {
+      setConfirmPasswordErrorMsg("Please enter the password again");
+    } else if (password !== confirmPassword) {
+      setConfirmPasswordErrorMsg("The password does not match");
+    } else {
+      valid = true;
+    }
+
+    return valid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:5000/users", {
-        name: name,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-        role: role
-      })
-      setMsg(response.data.msg);
-      navigate("/")
-    } catch (err) {
-      if (err.response) {
-        setMsg(err.response.data.msg);
+    // validate forms
+    let isUsernameValid = checkUsername(name),
+      isEmailValid = checkEmail(email),
+      isPasswordValid = checkPassword(password),
+      isConfirmPasswordValid = checkConfirmPassword(password, confirmPassword);
+
+    let isFormValid =
+      isUsernameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isConfirmPasswordValid;
+
+    // submit to the server if the form is valid
+    if (isFormValid) {
+      try {
+        const response = await axios.post("http://localhost:5000/users", {
+          name: name,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+          role: role,
+        });
+        setMsg(response.data.msg);
+        setTimeout(() => navigate("/"), 2000);
+      } catch (err) {
+        if (err.response) {
+          setMsg(err.response.data.msg);
+        }
       }
     }
   };
@@ -50,6 +139,7 @@ const SignUp = () => {
                       placeholder='Name'
                     />
                   </div>
+                  <p style={{color: "red", fontSize: "12px"}}>{nameErrorMsg}</p>
                 </div>
                 <div className='field'>
                   <label className='label'>Email</label>
@@ -62,6 +152,7 @@ const SignUp = () => {
                       placeholder='Name'
                     />
                   </div>
+                  <p style={{color: "red", fontSize: "12px"}}>{emailErrorMsg}</p>
                 </div>
                 <div className='field'>
                   <label className='label'>Password</label>
@@ -74,6 +165,8 @@ const SignUp = () => {
                       placeholder='Password'
                     />
                   </div>
+                  <p style={{color: "red", fontSize: "12px"}}>{passwordErrorMsg}</p>
+
                 </div>
                 <div className='field'>
                   <label className='label'>Confirm Password</label>
@@ -86,6 +179,8 @@ const SignUp = () => {
                       placeholder='Confirm Password'
                     />
                   </div>
+                  <p style={{color: "red", fontSize: "12px"}}>{confirmPasswordErrorMsg}</p>
+
                 </div>
                 <div className='field'>
                   <label className='label'>Role</label>
