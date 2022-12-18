@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import _ from "lodash";
 
 const FormAddProduct = () => {
   const [name, setName] = useState("");
@@ -14,7 +15,7 @@ const FormAddProduct = () => {
   const saveProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", image);
+    _.forEach(image, (file) => formData.append("image", file));
     formData.append("name", name);
     formData.append("price", price);
     formData.append("description", description);
@@ -99,7 +100,8 @@ const FormAddProduct = () => {
                     type='file'
                     className='input'
                     name='image'
-                    onChange={(e) => setImage(e.target.files[0])}
+                    onChange={(e) => setImage(e.target.files)}
+                    multiple
                   />
                 </div>
               </div>

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import _ from "lodash";
 
 const FormEditProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [msg, setMsg] = useState("");
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState([]);
   const [quantity, setQuantity] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -33,11 +34,11 @@ const FormEditProduct = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", image);
+    _.forEach(image, (file) => formData.append("image", file));
     formData.append("name", name);
     formData.append("price", price);
     formData.append("description", description);
-    formData.append("quantity", quantity)
+    formData.append("quantity", quantity);
 
     try {
       await axios.patch(`http://localhost:5000/products/${id}`, formData);
@@ -93,7 +94,7 @@ const FormEditProduct = () => {
                     type='number'
                     className='input'
                     placeholder='0'
-                    min="0"
+                    min='0'
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                   />
@@ -118,7 +119,8 @@ const FormEditProduct = () => {
                     type='file'
                     className='input'
                     name='image'
-                    onChange={(e) => setImage(e.target.files[0])}
+                    onChange={(e) => setImage(e.target.files)}
+                    multiple
                   />
                 </div>
               </div>

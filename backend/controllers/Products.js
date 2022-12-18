@@ -110,12 +110,14 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   const { name, price, description, quantity } = req.body;
+  const images = req.files
+  const image = images.map((item) => item["path"])
   try {
     await Product.create({
       name: name,
       price: price,
       description: description,
-      image: req.file?.path,
+      image: image,
       userId: req.userId,
       quantity: quantity,
     });
@@ -134,7 +136,8 @@ export const updateProduct = async (req, res) => {
     });
     if (!product) return res.status(404).json({ msg: "Product not found" });
     const { name, price, description, quantity } = req.body;
-    const image = req.file?.path;
+    const images = req.files
+    const image = images.map((item) => item["path"])
     if (req.role === "admin") {
       await Product.update(
         { name, price, image, description, quantity },

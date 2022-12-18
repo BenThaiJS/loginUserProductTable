@@ -18,9 +18,9 @@ export const imageUpload = multer({
     const mimType = fileTypes.test(file.mimetype);
     const extname = fileTypes.test(path.extname(file.originalname));
 
-    if(mimType && extname) {
-      return cb(null, true)
+    if (mimType && extname) {
+      return cb(null, true);
     }
-    cb("Give proper files format to upload")
+    cb("Give proper files format to upload");
   },
-}).single("image");
+}).array("image", 6);

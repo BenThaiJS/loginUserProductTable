@@ -16,7 +16,7 @@ const Products = db.define(
       },
     },
     image: {
-      type: DataTypes.STRING,
+      type: Sequelize.ARRAY(DataTypes.TEXT),
     },
     name: {
       type: DataTypes.STRING,

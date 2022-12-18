@@ -11,11 +11,11 @@ import ReviewProduct from "./pages/ReviewProduct";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import Cart from "./pages/Cart";
-// import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Account from "./pages/Account";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -23,7 +23,6 @@ function App() {
       <BrowserRouter>
         <Provider store={store}>
           <Routes>
-            {/* <Route path="/" element={<Home/>}/> */}
             <Route path='/' element={<Login />} />
             <Route path='/forgotPassword' element={<ForgotPassword />} />
             <Route path='/signup' element={<SignUp />} />
@@ -41,6 +40,7 @@ function App() {
             <Route path='/products/add' element={<AddProduct />} />
             <Route path='/products/edit/:id' element={<EditProduct />} />
             <Route path='/products/reviews/:id' element={<ReviewProduct />} />
+            <Route path="/checkout" element={<Checkout/>}/>
           </Routes>
         </Provider>
       </BrowserRouter>

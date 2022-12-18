@@ -94,12 +94,12 @@ const ProductList = () => {
                 {product.image ? (
                   <figure className='image is-48x48'>
                     <img
-                      src={`http://localhost:5000/${product.image}`}
+                      src={`http://localhost:5000/${JSON.parse(product.image)[0]}`}
                       alt={product.name}
                     />
                   </figure>
                 ) : (
-                  ""
+                  null
                 )}
               </td>
               <td>{capitalizeFirstLetter(product.name)}</td>

@@ -64,7 +64,7 @@ const Navbar = () => {
             <div className='navbar-item'>
               <p>Total: {getTotal().newTotalPrice}</p>
               <div className='buttons'>
-                <button className='button is-info is-light'>
+                <button className='button is-info is-light' onClick={() => navigate("/checkout")}>
                   <FaShoppingCart />
                   <div className='ml-2'>{getTotal().totalQuantity}</div>
                 </button>
