@@ -16,14 +16,17 @@ export const getProducts = createAsyncThunk(
   }
 );
 
-export const deleteProduct = createAsyncThunk("products/delete", async (productId, thunkAPI) => {
-  try {
-    await axios.delete(`http://localhost:5000/products/${productId}`);
-  } catch(err) {
-    const message = err.response.data.msg;
-    return thunkAPI.rejectWithValue(message);
+export const deleteProduct = createAsyncThunk(
+  "products/delete",
+  async (productId, thunkAPI) => {
+    try {
+      await axios.delete(`http://localhost:5000/products/${productId}`);
+    } catch (err) {
+      const message = err.response.data.msg;
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-})
+);
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -32,27 +35,42 @@ export const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const itemInCart = state.cart.find((item) => item.id === action.payload.id);
+      const itemInCart = state.cart.find(
+        (item) => item.id === action.payload.id
+      );
       if (itemInCart) {
         itemInCart.quantity++;
+        console.log(itemInCart.quantity, action.payload)
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }
     },
     incrementQuantity: (state, action) => {
-      const item = state.cart.find((item) => item.id === action.payload);
-      item.quantity++;
-    },
-    decrementQuantity: (state, action) => {
-      const item = state.cart.find((item) => item.id === action.payload);
-      if (item.quantity === 1) {
-        item.quantity = 1
+      const selectedQty =  parseInt(action.payload.qtySelected);
+      const itemInCart = state.cart.find(
+        (item) => item.id === action.payload.item.id
+      );
+      if (itemInCart) {
+        itemInCart.quantity += selectedQty
       } else {
-        item.quantity--;
+        state.cart.push({
+          ...action.payload.item,
+          quantity: selectedQty,
+        });
       }
     },
+    // decrementQuantity: (state, action) => {
+    //   const item = state.cart.find((item) => item.id === action.payload);
+    //   if (item.quantity === 1) {
+    //     item.quantity = 1
+    //   } else {
+    //     item.quantity--;
+    //   }
+    // },
     removeItem: (state, action) => {
-      const removeItem = state.cart.filter((item) => item.id !== action.payload);
+      const removeItem = state.cart.filter(
+        (item) => item.id !== action.payload
+      );
       state.cart = removeItem;
     },
   },
@@ -60,4 +78,4 @@ export const cartSlice = createSlice({
 
 export const cartReducer = cartSlice.reducer;
 
-export const { addToCart, removeItem, incrementQuantity, decrementQuantity } = cartSlice.actions;
+export const { addToCart, removeItem, incrementQuantity } = cartSlice.actions;

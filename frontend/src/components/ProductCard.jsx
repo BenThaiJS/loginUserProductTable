@@ -5,15 +5,18 @@ import { formatCurrency } from "../utils/functions";
 import CommentCard from "./CommentCard";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import Dropdown from "./Dropdown";
 
 const ProductCard = () => {
   const [comments, setComments] = useState("");
   const [msg, setMsg] = useState("");
+  const [productQuantity, setProductQuantity] = useState(0);
   const [productImage, setProductImage] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productName, setProductName] = useState("");
   const [productId, setProductId] = useState(0);
   const [productDescription, setProductDescription] = useState("");
+  const [product, setProduct] = useState(null)
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [hoverStar, setHoverStar] = useState(undefined);
@@ -41,9 +44,11 @@ const ProductCard = () => {
         const response = await axios.get(
           `http://localhost:5000/products/${id}`
         );
+        setProduct(response.data)
+        setProductQuantity(response.data.quantity);
         setProductName(response.data.name);
         setProductPrice(response.data.price);
-        setProductImage(response.data.image);
+        setProductImage(JSON.parse(response.data.image));
         setProductDescription(response.data.description);
         setProductId(response.data.id);
       } catch (err) {
@@ -75,8 +80,6 @@ const ProductCard = () => {
 
   const handleText = () => {
     switch (rating || hoverStar) {
-      case 0:
-        return "Evaluate";
       case 1:
         return "Very Poor";
       case 2:
@@ -88,7 +91,7 @@ const ProductCard = () => {
       case 5:
         return "Very Good";
       default:
-        return "Evaluate";
+        return "";
     }
   };
 
@@ -97,24 +100,44 @@ const ProductCard = () => {
       <header className='card-header'>
         <p className='card-header-title'>{productName.toUpperCase()}</p>
         <p>{msg}</p>
-        <p>{productDescription}</p>
-        <p>{formatCurrency(productPrice)}</p>
       </header>
-      {productImage ? (
-        <div className='card-image'>
-          <figure className='image is-3by2'>
-            <img
-              src={`http://localhost:5000/${productImage}`}
-              alt={productName}
-            />
-          </figure>
-        </div>
-      ) : (
-        ""
-      )}
+      <div
+        className='image-container'
+        style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
+      >
+        {productImage
+          ? productImage.map((image, index) => (
+              <img
+                src={`http://localhost:5000/${image}`}
+                alt={productName}
+                style={{
+                  margin: "5px",
+                  objectFit: "cover",
+                  width: "150px",
+                  height: "120px",
+                  border: "1px solid black",
+                }}
+                key={index + 1}
+              />
+            ))
+          : null}
+      </div>
+      <div className='price'>{formatCurrency(productPrice)}</div>
+        <Dropdown qty={productQuantity} item={product}/>
+      <div className='description-content'>
+        <h1>
+          <b>Description</b>
+        </h1>
+        {productDescription}
+      </div>
       <div className='card-content'>
+        <h1>
+          <b>Customer Reviews</b>
+        </h1>
         {reviews.map((review, index) => {
-          return <CommentCard details={review} userId={user?.uuid} key={index + 1}/>;
+          return (
+            <CommentCard details={review} userId={user?.uuid} key={index + 1} />
+          );
         })}
         <div>
           <div>
