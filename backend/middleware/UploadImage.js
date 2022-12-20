@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
   },
 });
 
-export const imageUpload = multer({
+export const imagesUpload = multer({
   storage: storage,
   limits: { fileSize: "1000000" },
   fileFilter: (req, file, cb) => {
@@ -24,3 +24,18 @@ export const imageUpload = multer({
     cb("Give proper files format to upload");
   },
 }).array("image", 6);
+
+export const imageUpload = multer({
+  storage: storage,
+  limits: { fileSize: "1000000" },
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimType = fileTypes.test(file.mimetype);
+    const extname = fileTypes.test(path.extname(file.originalname));
+
+    if (mimType && extname) {
+      return cb(null, true);
+    }
+    cb("Give proper files format to upload");
+  },
+}).single("image");
