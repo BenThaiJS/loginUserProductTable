@@ -66,7 +66,6 @@ const Profile = () => {
       }
     }
   };
-
   return (
     <div>
       <h1 className='title'>Account</h1>

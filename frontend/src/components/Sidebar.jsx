@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../redux/reducers/authSlice";
+import { clearCart } from "../redux/reducers/cartSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const Sidebar = () => {
 
   const logout = () => {
     dispatch(LogOut());
+    dispatch(clearCart());
     dispatch(reset());
     navigate("/");
   };

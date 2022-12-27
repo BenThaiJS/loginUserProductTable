@@ -12,9 +12,9 @@ import { imageUpload } from "../middleware/UploadImage.js";
 const router = express.Router();   
 
 router.get("/users", verifyUser, adminOnly, getUsers)
-router.get("/users/:id", verifyUser, adminOnly, getUserById);
+router.get("/users/:id", verifyUser, getUserById);
 router.post("/users", imageUpload, createUser);
-router.patch("/users/:id", verifyUser, adminOnly, imageUpload, updateUser);
+router.patch("/users/:id", verifyUser, imageUpload, updateUser);
 router.delete("/users/:id", verifyUser, adminOnly, deleteUser);
 
 

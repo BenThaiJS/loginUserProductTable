@@ -22,7 +22,6 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const checkUsername = (name) => {
-    console.log(name)
     let valid = false;
     const min = 3;
     const max = 25;

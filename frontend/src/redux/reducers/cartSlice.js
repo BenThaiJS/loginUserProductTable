@@ -40,18 +40,17 @@ export const cartSlice = createSlice({
       );
       if (itemInCart) {
         itemInCart.quantity++;
-        console.log(itemInCart.quantity, action.payload)
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }
     },
     incrementQuantity: (state, action) => {
-      const selectedQty =  parseInt(action.payload.qtySelected);
+      const selectedQty = parseInt(action.payload.qtySelected);
       const itemInCart = state.cart.find(
         (item) => item.id === action.payload.item.id
       );
       if (itemInCart) {
-        itemInCart.quantity += selectedQty
+        itemInCart.quantity = selectedQty;
       } else {
         state.cart.push({
           ...action.payload.item,
@@ -73,9 +72,13 @@ export const cartSlice = createSlice({
       );
       state.cart = removeItem;
     },
+    clearCart: (state) => {
+      state.cart = [];
+    },
   },
 });
 
 export const cartReducer = cartSlice.reducer;
 
-export const { addToCart, removeItem, incrementQuantity } = cartSlice.actions;
+export const { addToCart, removeItem, incrementQuantity, clearCart } =
+  cartSlice.actions;

@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../components/Layout";
 import { getMe } from "../redux/reducers/authSlice";
+import CheckoutList from "../components/CheckoutList";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -13,9 +14,11 @@ const Checkout = () => {
 
   console.log(cart)
 
-  return <div>
-    <Layout></Layout>
-  </div>;
+  return (
+    <Layout>
+      <CheckoutList/>
+    </Layout>
+  );
 };
 
 export default Checkout;

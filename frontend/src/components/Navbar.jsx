@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../redux/reducers/authSlice";
 import { FaShoppingCart } from "react-icons/fa";
 import { formatCurrency } from "../utils/functions";
+import { clearCart } from "../redux/reducers/cartSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch(LogOut());
+    dispatch(clearCart());
     dispatch(reset());
     navigate("/");
   };
@@ -24,7 +26,7 @@ const Navbar = () => {
       totalQuantity += item.quantity;
       totalPrice += item.price * item.quantity;
     });
-    const newTotalPrice = formatCurrency(totalPrice)
+    const newTotalPrice = formatCurrency(totalPrice);
     return { newTotalPrice, totalQuantity };
   };
 
@@ -62,9 +64,12 @@ const Navbar = () => {
         <div id='navbarBasicExample' className='navbar-menu'>
           <div className='navbar-end'>
             <div className='navbar-item'>
-              <p>Total: {getTotal().newTotalPrice}</p>
+              {/* <p>Total: {getTotal().newTotalPrice}</p> */}
               <div className='buttons'>
-                <button className='button is-info is-light' onClick={() => navigate("/checkout")}>
+                <button
+                  className='button is-info is-light'
+                  onClick={() => navigate("/checkout")}
+                >
                   <FaShoppingCart />
                   <div className='ml-2'>{getTotal().totalQuantity}</div>
                 </button>
